@@ -341,14 +341,14 @@ class MainWindow(QWidget):
                 self.devices.append(dev)
 
                 if pid == 0x7040 or pid == 0x7900:  # Sonix 248 and 248B
-                    self.qmk_offset = "0x00"
+                    self.qmk_offset = 0x00
                     self.rbtn_qmk_offset_0.setChecked(True)
                     self.rbtn_qmk_offset_200.setChecked(False)
                     self.rbtn_device_type_260.setChecked(False)
                     self.rbtn_device_type_240.setChecked(True)
 
                 if pid == 0x7010:  # Sonix 260
-                    self.qmk_offset = "0x200"
+                    self.qmk_offset = 0x200
                     self.rbtn_qmk_offset_200.setChecked(True)
                     self.rbtn_qmk_offset_0.setChecked(False)
                     self.rbtn_device_type_240.setChecked(False)
