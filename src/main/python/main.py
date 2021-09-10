@@ -273,6 +273,9 @@ class MainWindow(QWidget):
                          self.combobox_devices, btn_refresh_devices]
 
         self.on_click_refresh()
+        
+        if cli_mode:
+            self.on_click_flash_qmk()
 
     def lock_user(self):
         for obj in self.lockable:
@@ -299,6 +302,8 @@ class MainWindow(QWidget):
         self.progress_label.setText("Finished")
         self.on_click_refresh()
         self.unlock_user()
+        if cli_mode:
+            sys.exit(0)
 
     def _on_error(self, msg):
         self.progress_label.setText("Failed")
@@ -340,19 +345,25 @@ class MainWindow(QWidget):
                     self.device_descs[(vid, pid)], vid, pid, dev["manufacturer_string"], dev["product_string"]))
                 self.devices.append(dev)
 
+                if cli_mode and vid == cli_vid and pid == cli_pid:                    
+                    self.cli_dev = dev['path']
+                    
                 if pid == 0x7040 or pid == 0x7900:  # Sonix 248 and 248B
-                    self.qmk_offset = "0x00"
+                    self.qmk_offset = 0x00
                     self.rbtn_qmk_offset_0.setChecked(True)
                     self.rbtn_qmk_offset_200.setChecked(False)
                     self.rbtn_device_type_260.setChecked(False)
                     self.rbtn_device_type_240.setChecked(True)
 
                 if pid == 0x7010:  # Sonix 260
-                    self.qmk_offset = "0x200"
+                    self.qmk_offset = 0x200
                     self.rbtn_qmk_offset_200.setChecked(True)
                     self.rbtn_qmk_offset_0.setChecked(False)
                     self.rbtn_device_type_240.setChecked(False)
                     self.rbtn_device_type_260.setChecked(True)
+        
+        if cli_mode:
+            self.qmk_offset = cli_offset
 
     def get_active_device(self):
         idx = self.combobox_devices.currentIndex()
@@ -362,7 +373,11 @@ class MainWindow(QWidget):
 
         try:
             dev = hid.device()
-            dev.open_path(self.devices[idx]["path"])
+            if cli_mode:
+                print(self.cli_dev)
+                dev.open_path(self.cli_dev)
+            else:
+                dev.open_path(self.devices[idx]["path"])
             return dev
         except OSError:
             self._on_error(
@@ -403,8 +418,12 @@ class MainWindow(QWidget):
 
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        filename = QFileDialog.getOpenFileName(
-            None, "Select firmware to flash", "", "Firmware Files (*.bin)", options=options)[0]
+        
+        if cli_mode:
+            filename = cli_filename
+        else:
+            filename = QFileDialog.getOpenFileName(
+                None, "Select firmware to flash", "", "Firmware Files (*.bin)", options=options)[0]
         if not filename:
             self.close_dev()
             return
@@ -498,6 +517,15 @@ def excepthook(exc_type, exc_value, exc_tb):
 
 
 if __name__ == '__main__':
+    if (len(sys.argv) == 5):
+        cli_mode = True
+        cli_vid = int(sys.argv[1], 16)
+        cli_pid = int(sys.argv[2], 16)
+        cli_offset = int(sys.argv[3], 16)
+        cli_filename = sys.argv[4]
+    else:
+        cli_mode = False
+
     appctxt = ApplicationContext()
     window = MainWindow()
     window.resize(600, 500)
