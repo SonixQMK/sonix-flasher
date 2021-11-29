@@ -47,6 +47,12 @@ DEVICE_DESC = {
     (0x0C45, 0x8508): "SPCGear",
     (0x0C45, 0x7903): "Ajazz",
     (0x05AC, 0x024F): "Flashquark Horizon Z",
+
+    # Keychron keyboards with QMK
+    (0x3434, 0xFE20): "Keychron C1 ANSI",
+    (0x3434, 0xFE21): "Keychron C1 ISO",
+    (0x3434, 0xFE22): "Keychron C2 ANSI",
+    (0x3434, 0xFE23): "Keychron C2 ISO",
 }
 
 def get_platform():
