@@ -25,6 +25,14 @@ fbs run
 # or "fbs freeze" to create the package
 ```
 
+Alternatively, if you're running NixOS or have Nix installed, you can run
+
+```
+nix develop
+fbs run
+```
+
+
 To run it for immediate use, just run `run.sh` and it'll set itself up and run.
 
 Run with sudo to flash unless you have the correct udev rules set up.
