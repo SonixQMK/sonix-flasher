@@ -28,7 +28,7 @@ fbs run
 Alternatively, if you're running NixOS or have Nix installed, you can run
 
 ```
-nix develop
+nix shell
 fbs run
 ```
 
