@@ -1,6 +1,0 @@
-{
-    "app_name": "Sonix Keyboard Flasher",
-    "author": "xyz, jindaxia",
-    "main_module": "src/main/python/main.py",
-    "version": "0.1.0"
-}

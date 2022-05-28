@@ -1,5 +1,7 @@
 venv
-target
+build
+dist
 __pycache__
 *.pyc
 .idea
+.vscode

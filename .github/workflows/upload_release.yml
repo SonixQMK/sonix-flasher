@@ -10,8 +10,10 @@ jobs:
   create-release-tag:
     name: Create The Release
     runs-on: ubuntu-latest
+
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
+
     steps:
       - name: Create Release
         id: create_release
@@ -23,17 +25,19 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
   build-linux:
     runs-on: ubuntu-18.04
     needs: create-release-tag
+
     steps:
     - name: Install dependencies
-      run: sudo apt-get install libusb-1.0-0-dev libudev-dev
+      run: sudo apt-get install qtbase5-dev libxcomposite-dev libxkbcommon-x11-dev libusb-1.0-0-dev libudev-dev
 
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
       with:
-        python-version: '3.6.x'
+        python-version: '3.7.x'
 
     - name: Setup venv
       run: |
@@ -46,9 +50,11 @@ jobs:
     - name: Build
       run: |
         source venv/bin/activate
-        fbs freeze
-        cd target
-        tar cfJ flasher-linux.tar.xz "Sonix Keyboard Flasher"
+        pyinstaller sonix-flasher.spec
+        chmod +x .github/workflows/clean-libraries.sh
+        .github/workflows/clean-libraries.sh
+        cd dist
+        tar cfJ flasher-linux.tar.xz "sonix-flasher"
 
     - name: Upload Release Asset
       id: upload-release-asset 
@@ -57,18 +63,19 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create-release-tag.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: target/flasher-linux.tar.xz
+        asset_path: dist/flasher-linux.tar.xz
         asset_name: flasher-linux.tar.xz
         asset_content_type: application/zip
 
   build-mac:
     runs-on: macos-10.15
     needs: create-release-tag
+
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
       with:
-        python-version: '3.6.x'
+        python-version: '3.7.x'
 
     - name: Setup venv
       run: |
@@ -80,8 +87,8 @@ jobs:
     - name: Build
       run: |
         source venv/bin/activate
-        fbs freeze
-        hdiutil create -volname "Sonix Keyboard Flasher" -srcfolder "target/Sonix Keyboard Flasher.app" -ov -format UDZO flasher-mac.dmg
+        pyinstaller --onefile -n "sonix-flasher" --windowed src/sonix-flasher/main.py
+        hdiutil create -volname "sonix-flasher" -srcfolder "dist/" -ov -format UDZO flasher-mac.dmg
 
     - name: Upload Release Asset
       id: upload-release-asset 
@@ -97,11 +104,12 @@ jobs:
   build-win:
     runs-on: windows-2019
     needs: create-release-tag
+
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
       with:
-        python-version: '3.6.x'
+        python-version: '3.7.x'
 
     - name: Setup venv
       run: |
@@ -112,8 +120,8 @@ jobs:
     - name: Build
       run: |
         . .\venv\Scripts\activate.ps1
-        fbs freeze
-        Compress-Archive -Path "target\Sonix Keyboard Flasher" -DestinationPath flasher-win.zip
+        pyinstaller sonix-flasher.spec
+        Compress-Archive -Path "dist\sonix-flasher" -DestinationPath flasher-win.zip
 
     - name: Upload Release Asset
       id: upload-release-asset 

@@ -1,6 +1,5 @@
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QProgressBar, QGroupBox, \
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QProgressBar, QGroupBox, \
     QComboBox, QSizePolicy, QToolButton, QMessageBox, QFileDialog, QRadioButton
 
 import sys
@@ -608,7 +607,7 @@ if __name__ == '__main__':
     else:
         cli_mode = False
 
-    appctxt = ApplicationContext()
+    app = QApplication(sys.argv)
     window = MainWindow()
     window.resize(600, 500)
     if get_platform() == "Linux":
@@ -621,5 +620,4 @@ if __name__ == '__main__':
         
     window.show()
     sys.excepthook = excepthook
-    exit_code = appctxt.app.exec_()
-    sys.exit(exit_code)
+    sys.exit(app.exec_())
