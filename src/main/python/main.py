@@ -254,7 +254,7 @@ class MainWindow(QWidget):
         btn_flash_qmk.clicked.connect(self.on_click_flash_qmk)
 
         lbl_help = QLabel(
-            "After jumploader is installed, hold Backspace while plugging in the keyboard to start in bootloader mode.")
+            "After jumploader is installed, hold Backspace(Enter for GMMK keyboards) while plugging in the keyboard to start in bootloader mode.")
         lbl_help.setWordWrap(True)
 
         btn_reboot_bl_evision = QPushButton("Reboot to Bootloader [eVision]")
