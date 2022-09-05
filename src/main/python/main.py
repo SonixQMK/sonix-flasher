@@ -45,6 +45,7 @@ DEVICE_DESC = {
     (0x0c45, 0x5004): "Redragon",
     (0x0c45, 0x5104): "Redragon",
     (0x0C45, 0x8513): "Sharkoon",
+    (0x0C45, 0x8006): "Sharkoon SGK50 S4",
     (0x0C45, 0x8508): "SPCGear",
     (0x3299, 0x4E58): "SPCGear",
     (0x0C45, 0x7903): "Ajazz",
