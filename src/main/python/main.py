@@ -469,7 +469,6 @@ class MainWindow(QWidget):
         if len(firmware) < 0x100:
             self._on_error("Firmware is too small")
             return False
-        firmware_valid = True
         # check stack pointer is valid and that first 3 vectors have bit0 set
         sp, *vecs = struct.unpack("<IIII", firmware[0:16])
         if sp < 0x20000000 or sp > 0x20000800 or vecs[0] & 1 != 1 or vecs[1] & 1 != 1 or vecs[2] & 1 != 1:
