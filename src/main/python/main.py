@@ -37,6 +37,7 @@ DEVICE_DESC = {
 
     # keyboards in normal mode:
     (0x05ac, 0x024f): "Apple Keyboard / Keychron / Flashquark Horizon Z",
+    (0x05ac, 0x0250): "Apple Keyboard / Keychron",
     (0x05ac, 0x0256): "Apple Keyboard / Ajazz K870T / RAKK Lam-Ang Pro / Miller GM807",
     (0x0c45, 0x652f): "Glorious GMMK / Tecware Phantom",
     (0x0c45, 0x5004): "Redragon",
@@ -114,6 +115,7 @@ DEVICE_DESC = {
     (0x3434, 0xfe3d): "Keychron C15 ISO",
     (0x3434, 0xfe3e): "Keychron C16 ANSI",
     (0x3434, 0xfe3f): "Keychron C16 ISO",
+    (0x3938, 0x1205): "Onn KMF Mechanical Gaming Keyboard",
 }
 
 def get_platform():
