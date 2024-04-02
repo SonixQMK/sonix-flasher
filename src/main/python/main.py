@@ -120,6 +120,7 @@ DEVICE_DESC = {
     (0x3434, 0xfe3f): "Keychron C16 ISO",
     (0x3938, 0x1205): "Onn KMF Mechanical Gaming Keyboard",
     (0x09da, 0x322c): "A4Tech Generic Keyboard",
+    (0x046a, 0x00df): "Cherry MX 10.0N RGB",
 }
 
 def get_platform():
