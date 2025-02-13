@@ -120,7 +120,14 @@ DEVICE_DESC = {
     (0x3434, 0xfe3f): "Keychron C16 ISO",
     (0x3938, 0x1205): "Onn KMF Mechanical Gaming Keyboard",
     (0x09da, 0x322c): "A4Tech Generic Keyboard",
-    (0x046a, 0x00df): "Cherry MX 10.0N RGB",
+    (0x046a, 0x00df): "Cherry MX 10.0N RGB (EU)",
+    (0x046a, 0x00e2): "Cherry MX 10.0N RGB (US)",
+    (0x046a, 0x00dd): "Cherry G80-3000N RGB TKL (EU)",
+    (0x046a, 0x00e0): "Cherry G80-3000N RGB TKL (US)",
+    (0x046a, 0x00de): "Cherry G80-3000N RGB (EU)",
+    (0x046a, 0x00e1): "Cherry G80-3000N RGB (US)",
+    (0x046a, 0x01a6): "Cherry MX Board 2.0S",
+    (0x046a, 0x0079): "Cherry MX Board 3.0S",
 }
 
 def get_platform():
