@@ -1,7 +1,7 @@
 # Sonix Flasher
 
 ## Usage
-
+DO NOT USE - DEPRECATED AND POTENTIALLY DANGEROUS!!!!!!
 ### Entering bootloader
 
 You must boot into bootloader to flash the firmware，you have some choices to do it
